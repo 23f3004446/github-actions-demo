@@ -1,14 +1,22 @@
-name: Basic GitHub Action Test
+name: Cache Dependencies Workflow
 
 on:
-  workflow_dispatch:  # allows manual triggering
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
-  test:
+  cache-job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 23f3004446@ds.study.iitm.ac.in
-        run: echo "Hello from GitHub Actions! 🎉"
+      - name: prime-cache-8a1c90e
+        uses: actions/cache@v4
+        id: cache-step
+        with:
+          path: ~/.cache/pip
+          key: cache-8a1c90e
+
+      - name: Show cache status
+        run: echo "Cache hit: ${{ steps.cache-step.outputs.cache-hit }}"
